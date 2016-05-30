@@ -1,0 +1,41 @@
+body {
+	padding: 30px;
+	font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+h2 {
+	margin:0 0 .5em 0;
+}
+
+a {
+	color: #00B7FF;
+}
+
+#wrapper {
+	position:relative;
+}
+
+#minerInfo {
+	border:0;
+	padding:0;
+	margin:0;
+}
+#minerInfo table {
+	background:#CCC;
+}
+#minerInfo table th {
+	background:#EEE;
+	text-align:center;
+}
+#minerInfo table tbody {
+	border-collapse:collapse;
+	border-spacing:0px;
+}
+#minerInfo table td {
+	background:#FFF;
+	text-align:center;
+}
+
+.error {
+	color:#F00;
+}

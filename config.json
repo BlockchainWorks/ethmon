@@ -1,0 +1,20 @@
+{
+    "miner_poll": 5000,
+    "miner_timeout": 1000,
+    "web_refresh": 5000,
+    "miners": [
+        {
+            "name": "rig01",
+            "host": "10.0.0.112",
+            "port": 3333,
+            "comments": "ASUS 7950<br>Sapphire 390X<br>Sapphire 390X<br>Sapphire 390"
+        },
+        {
+            "name": "rig02",
+            "host": "10.0.0.20",
+            "port": 3333,
+            "comments": "ASUS 7950<br>MSI 7970<br>MSI 7970"
+        }
+    ]
+}
+
