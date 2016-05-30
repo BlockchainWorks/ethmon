@@ -22,7 +22,6 @@ Origin: https://github.com/osnwt/ethmon
 
 ## TODO
 * Provide expected hashrates in config and mark miners with low hashrate with color
-* Display AJAX request timeouts in web app (currently silently ignored and retried)
 * Use some logging facility instead of console.log()
 * Style the web page for small screens of mobile devices (anybody?)
 

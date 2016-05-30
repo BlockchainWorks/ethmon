@@ -88,14 +88,21 @@ function worker() {
             var summaryContent = '';
             summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, ', ') + '<br>';
             summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, ', ');
-
-            // Inject totals into HTML
             $('#minerSummary').html(summaryContent);
+
+            // Display last update date/time
+            var lastUpdated = 'Last updated: ' + data.updated;
+            $('#lastUpdated').html(lastUpdated).removeClass("error");
 
             // Update refresh interval if defined
             if (data.refresh !== undefined) {
                 refresh = data.refresh;
             }
+        },
+
+        error: function() {
+            // Mark last update time with error flag
+            $('#lastUpdated').addClass("error");
         },
 
         complete: function() {

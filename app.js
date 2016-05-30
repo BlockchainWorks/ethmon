@@ -27,7 +27,8 @@ app.use(function(req, res, next) {
     req.title = config.title;
     req.json = {
         "miners" : miners.json,
-        "refresh" : config.web_refresh
+        "refresh" : config.web_refresh,
+        "updated" : moment().format("YYYY-MM-DD HH:mm:ss")
     };
     next();
 });
