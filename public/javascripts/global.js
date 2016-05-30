@@ -14,8 +14,8 @@ function worker() {
     var eth = [ 0, 0, 0 ];
     var dcr = [ 0, 0, 0 ];
 
-    function format_stats(stats, currency, splitter) {
-        if (stats) {
+    function format_stats(stats, currency, splitter, skip) {
+        if (!skip && stats) {
             if (!splitter) {
                 splitter = '';
             }
@@ -70,7 +70,7 @@ function worker() {
                 if (this.error == null) {
                     tableContent += '<td>' + this.uptime + '</td>';
                     tableContent += '<td>' + format_stats(this.eth, eth, '<br>') + '</td>';
-                    tableContent += '<td>' + format_stats(this.dcr, dcr, '<br>') + '</td>';
+                    tableContent += '<td>' + format_stats(this.dcr, dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
                     tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
                     tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
                     tableContent += '<td>' + this.ver + '</td>';
