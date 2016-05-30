@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Make miner data accessible to the router
 app.use(function(req, res, next) {
+    req.title = config.title;
     req.json = {
         "miners" : miners.json,
         "refresh" : config.web_refresh

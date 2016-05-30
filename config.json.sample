@@ -1,4 +1,5 @@
 {
+    "title": "Miner Monitor",
     "miner_poll": 5000,
     "miner_timeout": 1000,
     "web_refresh": 5000,
