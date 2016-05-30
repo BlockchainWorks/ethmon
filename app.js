@@ -169,7 +169,22 @@ config.miners.forEach(function(item, i, arr) {
         m.socket.connect(m.port, m.host);
     };
 
-    poll();
+    if ((typeof c.offline === 'undefined') || !c.offline) {
+        poll();
+    } else {
+        miners.json[i] = {
+            "name"     : m.name,
+            "host"     : m.host + ':' + m.port,
+            "uptime"   : "",
+            "eth"      : "",
+            "dcr"      : "",
+            "temps"    : "",
+            "pools"    : "",
+            "ver"      : "",
+            "comments" : c.comments,
+            "error"    : null
+        };
+    }
 });
 
 // --------------- /REQUESTER ---------------
