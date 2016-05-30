@@ -32,19 +32,25 @@ function worker() {
         return '';
     }
 
-    function format_temps(temps) {
+    function format_temps(temps, splitter) {
+        if (!splitter) {
+            splitter = ' ';
+        }
         var tf = '';
         if (temps) {
             var t = temps.split(';');
             for (var i = 0; i < t.length; i += 2) {
-                tf += ((i > 0) ? '<br>' : '') + t[i] + 'C:' + t[i+1] + '%';
+                tf += ((i > 0) ? splitter : '') + t[i] + 'C:' + t[i+1] + '%';
             }
         }
-        return tf.trim();
+        return tf;
     }
 
-    function format_pools(pools) {
-        return pools.split(';').join('<br>');
+    function format_pools(pools, splitter) {
+        if (!splitter) {
+            splitter = '; ';
+        }
+        return pools.split(';').join(splitter);
     }
 
     $.ajax({
@@ -65,8 +71,8 @@ function worker() {
                     tableContent += '<td>' + this.uptime + '</td>';
                     tableContent += '<td>' + format_stats(this.eth, eth, '<br>') + '</td>';
                     tableContent += '<td>' + format_stats(this.dcr, dcr, '<br>') + '</td>';
-                    tableContent += '<td>' + format_temps(this.temps) + '</td>';
-                    tableContent += '<td>' + format_pools(this.pools) + '</td>';
+                    tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
+                    tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
                     tableContent += '<td>' + this.ver + '</td>';
                 } else {
                     tableContent += '<td colspan="6">' + this.error + '</td>';
