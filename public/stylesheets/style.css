@@ -33,6 +33,7 @@ a {
 #minerInfo table td {
     background: #FFF;
     text-align: center;
+    padding: 3px 3px;
 }
 
 #lastUpdated {
