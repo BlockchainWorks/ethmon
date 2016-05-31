@@ -21,6 +21,8 @@ Origin: https://github.com/osnwt/ethmon
 * On Ubuntu after 'apt-get install npm' the node interpreter is called nodejs due to conflict with some other package. In that case you may need to replace "node ./bin/www" by "nodejs ./bin/www" in package.json file
 
 ## TODO
+* Optionally mark overheated card temperature using critical temperature option in config.json
+* Optionally update web app window caption to show current hashrates
 * Use some logging facility instead of console.log()
 * Style the web page for small screens of mobile devices (anybody?)
 
