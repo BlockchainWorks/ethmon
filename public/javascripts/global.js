@@ -2,6 +2,9 @@
 // Default web refresh interval (may be changed with web_refresh config option)
 var refresh = 5000;
 
+// Default hashrate tolerance (+/- to target hashrate)
+var tolerance = 0.05;
+
 // DOM Ready =============================================================
 
 $(document).ready(function() {
@@ -14,20 +17,36 @@ function worker() {
     var eth = [ 0, 0, 0 ];
     var dcr = [ 0, 0, 0 ];
 
-    function format_stats(stats, currency, splitter, skip) {
+    function format_stats(stats, currency, target, splitter, skip) {
         if (!skip && stats) {
             if (!splitter) {
                 splitter = '';
             }
+
             var s = stats.split(';');
-            var stats = Number(s[0]/1000).toFixed(2) + ' MH/s' + splitter + s[1] + '/' + s[2];
-            var rate = (s[1] > 0) ? (' (' + Number(s[2] / s[1] * 100).toFixed(2) + '%)') : '';
+
+            // Update totals
             if (currency != null) {
                 currency[0] += Number(s[0]);
                 currency[1] += Number(s[1]);
                 currency[2] += Number(s[2]);
             }
-            return stats + rate;
+
+            // Format fields
+            var hashrate = Number(s[0] / 1000).toFixed(2) + ' MH/s';
+            var shares = s[1] + '/' + s[2];
+            var rejects = (s[1] > 0) ? (' (' + Number(s[2] / s[1] * 100).toFixed(2) + '%)') : '';
+
+            // Check tolerance
+            if ((target !== null) && tolerance) {
+                if (s[0] / 1000 < target * (1 - tolerance)) {
+                    hashrate = '<span class="error">' + hashrate + '</span>';
+                } else if (s[0] / 1000 > target * (1 + tolerance)) {
+                    hashrate = '<span class="warning">' + hashrate + '</span>';
+                }
+            }
+
+            return hashrate + splitter + shares + rejects;
         }
         return '';
     }
@@ -57,9 +76,13 @@ function worker() {
         url: '/miners',
 
         success: function(data) {
-            var tableContent = '';
+            // Target hashrate tolerance
+            if (data.tolerance !== undefined) {
+                tolerance = data.tolerance / 100;
+            }
 
             // For each item in JSON, add a table row and cells to the content string
+            var tableContent = '';
             $.each(data.miners, function() {
 
                 var error = (this.error == null) ? '' : ' class=error';
@@ -69,8 +92,8 @@ function worker() {
                 tableContent += '<td>' + this.host + '</td>';
                 if (this.error == null) {
                     tableContent += '<td>' + this.uptime + '</td>';
-                    tableContent += '<td>' + format_stats(this.eth, eth, '<br>') + '</td>';
-                    tableContent += '<td>' + format_stats(this.dcr, dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
+                    tableContent += '<td>' + format_stats(this.eth, eth, this.target_eth, '<br>') + '</td>';
+                    tableContent += '<td>' + format_stats(this.dcr, dcr, this.target_dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
                     tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
                     tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
                     tableContent += '<td>' + this.ver + '</td>';
@@ -86,8 +109,8 @@ function worker() {
             $('#minerInfo table tbody').html(tableContent);
 
             var summaryContent = '';
-            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, ', ') + '<br>';
-            summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, ', ');
+            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
+            summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
             $('#minerSummary').html(summaryContent);
 
             // Display last update date/time

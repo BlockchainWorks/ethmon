@@ -15,6 +15,11 @@ Please notice that this sample will not work since contains comments not permitt
     // Web page refresh interval in ms
     "web_refresh": 5000,
 
+    // Optional hashrate tolerance to target hashrates in %.
+    // Actual hashrate will be painted if out of bounds (target +/- tolerance)
+    // Missing or zero value disables hashrate check.
+    "tolerance": 5,
+
     // Miners configuration. Use one {} block per miner
     "miners": [
         {
@@ -24,6 +29,10 @@ Please notice that this sample will not work since contains comments not permitt
             // Miner host and port. IP address or domain name can be used
             "host": "10.0.0.15",
             "port": 3333,
+
+            // Optional target hashrates in MH/s
+            "target_eth": 118,
+            "target_dcr": 2700,
 
             // Miner comments. Use '<br>' for line breaks
             "comments": "ASUS 7950<br>Sapphire 390X<br>Sapphire 390X<br>Sapphire 390",

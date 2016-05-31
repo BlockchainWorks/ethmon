@@ -43,3 +43,7 @@ a {
 .error {
     color: #F00;
 }
+
+.warning {
+    color: #00F;
+}

@@ -3,11 +3,14 @@
     "miner_poll": 5000,
     "miner_timeout": 1000,
     "web_refresh": 5000,
+    "tolerance": 5,
     "miners": [
         {
             "name": "rig01",
             "host": "10.0.0.112",
             "port": 3333,
+            "target_eth": 118,
+            "target_dcr": 2700,
             "comments": "ASUS 7950<br>Sapphire 390X<br>Sapphire 390X<br>Sapphire 390",
             "offline": false
         },
@@ -15,7 +18,18 @@
             "name": "rig02",
             "host": "10.0.0.20",
             "port": 3333,
+            "target_eth": 60,
+            "target_dcr": 1200,
             "comments": "ASUS 7950<br>MSI 7970<br>MSI 7970",
+            "offline": false
+        },
+        {
+            "name": "rig03",
+            "host": "10.0.0.102",
+            "port": 3333,
+            "target_eth": 19,
+            "target_dcr": 395,
+            "comments": "ASUS 7950",
             "offline": false
         }
     ]

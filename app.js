@@ -28,6 +28,7 @@ app.use(function(req, res, next) {
     req.json = {
         "miners" : miners.json,
         "refresh" : config.web_refresh,
+        "tolerance" : config.tolerance,
         "updated" : moment().format("YYYY-MM-DD HH:mm:ss")
     };
     next();
@@ -114,16 +115,18 @@ config.miners.forEach(function(item, i, arr) {
         console.log(m.name + ': response timeout');
         m.socket.destroy();
         miners.json[i] = {
-            "name"     : m.name,
-            "host"     : m.host + ':' + m.port,
-            "uptime"   : "",
-            "eth"      : "",
-            "dcr"      : "",
-            "temps"    : "",
-            "pools"    : "",
-            "ver"      : "",
-            "comments" : c.comments,
-            "error"    : 'Error: no response'
+            "name"       : m.name,
+            "host"       : m.host + ':' + m.port,
+            "uptime"     : "",
+            "eth"        : "",
+            "dcr"        : "",
+            "temps"      : "",
+            "pools"      : "",
+            "ver"        : "",
+            "target_eth" : "",
+            "target_dcr" : "",
+            "comments"   : c.comments,
+            "error"      : 'Error: no response'
         };
     })
 
@@ -133,16 +136,18 @@ config.miners.forEach(function(item, i, arr) {
         m.socket.setTimeout(0);
         var d = JSON.parse(data);
         miners.json[i] = {
-            "name"     : m.name,
-            "host"     : m.host + ':' + m.port,
-            "uptime"   : moment.duration(parseInt(d.result[1]), 'minutes').format('d [days,] hh:mm'),
-            "eth"      : d.result[2],
-            "dcr"      : d.result[4],
-            "temps"    : d.result[6],
-            "pools"    : d.result[7],
-            "ver"      : d.result[0],
-            "comments" : c.comments,
-            "error"    : null
+            "name"       : m.name,
+            "host"       : m.host + ':' + m.port,
+            "uptime"     : moment.duration(parseInt(d.result[1]), 'minutes').format('d [days,] hh:mm'),
+            "eth"        : d.result[2],
+            "dcr"        : d.result[4],
+            "temps"      : d.result[6],
+            "pools"      : d.result[7],
+            "ver"        : d.result[0],
+            "target_eth" : c.target_eth,
+            "target_dcr" : c.target_dcr,
+            "comments"   : c.comments,
+            "error"      : null
         };
     })
 
@@ -154,16 +159,18 @@ config.miners.forEach(function(item, i, arr) {
     .on('error', function(e) {
         console.log(m.name + ': socket error: ' + e.message);
         miners.json[i] = {
-            "name"     : m.name,
-            "host"     : m.host + ':' + m.port,
-            "uptime"   : "",
-            "eth"      : "",
-            "dcr"      : "",
-            "temps"    : "",
-            "pools"    : "",
-            "ver"      : "",
-            "comments" : c.comments,
-            "error"    : e.name + ': ' + e.message
+            "name"       : m.name,
+            "host"       : m.host + ':' + m.port,
+            "uptime"     : "",
+            "eth"        : "",
+            "dcr"        : "",
+            "temps"      : "",
+            "pools"      : "",
+            "ver"        : "",
+            "target_eth" : "",
+            "target_dcr" : "",
+            "comments"   : c.comments,
+            "error"      : e.name + ': ' + e.message
         };
     });
 
@@ -175,16 +182,18 @@ config.miners.forEach(function(item, i, arr) {
         poll();
     } else {
         miners.json[i] = {
-            "name"     : m.name,
-            "host"     : m.host + ':' + m.port,
-            "uptime"   : "",
-            "eth"      : "",
-            "dcr"      : "",
-            "temps"    : "",
-            "pools"    : "",
-            "ver"      : "",
-            "comments" : c.comments,
-            "error"    : null
+            "name"       : m.name,
+            "host"       : m.host + ':' + m.port,
+            "uptime"     : "",
+            "eth"        : "",
+            "dcr"        : "",
+            "temps"      : "",
+            "pools"      : "",
+            "ver"        : "",
+            "target_eth" : "",
+            "target_dcr" : "",
+            "comments"   : c.comments,
+            "error"      : null
         };
     }
 });
