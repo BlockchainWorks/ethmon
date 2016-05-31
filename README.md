@@ -26,4 +26,6 @@ Origin: https://github.com/osnwt/ethmon
 * Style the web page for small screens of mobile devices (anybody?)
 
 ## Donations
-If you find this utility useful, BTC donation address is 1H811tiLPcMwjGoWVDLQwTWpWaq5RpYSCZ
+If you find this utility useful, here are donation addresses:
+* BTC: 1H811tiLPcMwjGoWVDLQwTWpWaq5RpYSCZ
+* ETH: 0xB9b7540a4B2077Ca9Cde23021e413Ec81c5b1Cae
