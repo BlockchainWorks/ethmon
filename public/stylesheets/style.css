@@ -42,8 +42,10 @@ a {
 
 .error {
     color: #F00;
+    font-weight: bolder
 }
 
 .warning {
     color: #00F;
+    font-weight: bolder
 }

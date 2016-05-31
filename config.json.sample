@@ -4,6 +4,7 @@
     "miner_timeout": 1000,
     "web_refresh": 5000,
     "tolerance": 5,
+    "temperature": 70,
     "miners": [
         {
             "name": "rig01",

@@ -20,6 +20,9 @@ Please notice that this sample will not work since contains comments not permitt
     // Missing or zero value disables hashrate check.
     "tolerance": 5,
 
+    // Optional temperature monitor threshold (no checks if unset or zero)
+    "temperature": 70,
+
     // Miners configuration. Use one {} block per miner
     "miners": [
         {

@@ -26,10 +26,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     req.title = config.title;
     req.json = {
-        "miners" : miners.json,
-        "refresh" : config.web_refresh,
-        "tolerance" : config.tolerance,
-        "updated" : moment().format("YYYY-MM-DD HH:mm:ss")
+        "miners"      : miners.json,
+        "refresh"     : config.web_refresh,
+        "tolerance"   : config.tolerance,
+        "temperature" : config.temperature,
+        "updated"     : moment().format("YYYY-MM-DD HH:mm:ss")
     };
     next();
 });

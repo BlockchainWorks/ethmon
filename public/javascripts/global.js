@@ -5,6 +5,9 @@ var refresh = 5000;
 // Default hashrate tolerance (+/- to target hashrate)
 var tolerance = 0.05;
 
+// GPU temperature monitoring threshold (zero disables monitoring)
+var temperature = 0;
+
 // DOM Ready =============================================================
 
 $(document).ready(function() {
@@ -59,7 +62,12 @@ function worker() {
         if (temps) {
             var t = temps.split(';');
             for (var i = 0; i < t.length; i += 2) {
-                tf += ((i > 0) ? splitter : '') + t[i] + 'C:' + t[i+1] + '%';
+                var temp = t[i] + 'C';
+                var fan = t[i+1] + '%';
+                if (temperature && (t[i] > temperature)) {
+                    temp = '<span class="error">' + temp + '</span>';
+                }
+                tf += ((i > 0) ? splitter : '') + temp + ':' + fan;
             }
         }
         return tf;
@@ -79,6 +87,11 @@ function worker() {
             // Target hashrate tolerance
             if (data.tolerance !== undefined) {
                 tolerance = data.tolerance / 100;
+            }
+
+            // GPU temperature monitoring threshold
+            if (data.temperature !== undefined) {
+                temperature = data.temperature;
             }
 
             // For each item in JSON, add a table row and cells to the content string
