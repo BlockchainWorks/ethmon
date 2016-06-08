@@ -133,6 +133,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_eth" : "",
             "target_dcr" : "",
             "comments"   : c.comments,
+            "offline"    : c.offline,
             "error"      : 'Error: no response'
         };
     })
@@ -156,6 +157,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_eth" : c.target_eth,
             "target_dcr" : c.target_dcr,
             "comments"   : c.comments,
+            "offline"    : c.offline,
             "error"      : null
         };
     })
@@ -181,6 +183,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_eth" : "",
             "target_dcr" : "",
             "comments"   : c.comments,
+            "offline"    : c.offline,
             "error"      : e.name + ': ' + e.message
         };
     });
@@ -206,6 +209,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_eth" : "",
             "target_dcr" : "",
             "comments"   : c.comments,
+            "offline"    : c.offline,
             "error"      : null
         };
     }

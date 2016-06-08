@@ -45,7 +45,8 @@ Please notice that this sample will not work since contains comments not permitt
 
             // Optional setting to declare a miner as temporary offline.
             // This miner will be shown in a table but no polls will be performed.
-            "offline": true,
+            // Can be false or empty string if online, or "some message" if offline (will be shown).
+            "offline": false,
 
             // Optional miner-specific overrides for default miner_poll and miner_timeout values
             "poll": 3000,

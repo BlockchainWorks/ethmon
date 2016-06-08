@@ -117,7 +117,12 @@ function worker() {
                 tableContent += '<tr' + error + '>';
                 tableContent += '<td>' + this.name + '</td>';
                 tableContent += '<td>' + this.host + '</td>';
-                if (this.error == null) {
+
+                if (this.error) {
+                    tableContent += '<td colspan="8">' + this.error + '</td>';
+                } else if (this.offline) {
+                    tableContent += '<td colspan="8">' + this.offline + '</td>';
+                } else {
                     tableContent += '<td>' + this.uptime + '</td>';
                     tableContent += '<td>' + format_stats(this.eth, eth, this.target_eth, '<br>') + '</td>';
                     tableContent += '<td>' + format_stats(this.dcr, dcr, this.target_dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
@@ -126,8 +131,6 @@ function worker() {
                     tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
                     tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
                     tableContent += '<td>' + this.ver + '</td>';
-                } else {
-                    tableContent += '<td colspan="8">' + this.error + '</td>';
                 }
                 tableContent += '<td>' + this.comments + '</td>';
                 tableContent += '</tr>';

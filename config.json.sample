@@ -32,7 +32,7 @@
             "target_eth": 19,
             "target_dcr": 395,
             "comments": "ASUS 7950",
-            "offline": false
+            "offline": "Monitoring disabled for this host"
         }
     ]
 }
