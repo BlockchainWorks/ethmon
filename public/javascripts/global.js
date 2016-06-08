@@ -73,6 +73,20 @@ function worker() {
         return tf;
     }
 
+    function format_hashrates(hr, splitter) {
+        if (!splitter) {
+            splitter = ' ';
+        }
+        var hashrates = '';
+        if (hr) {
+            var h = hr.split(';');
+            for (var i = 0; i < h.length; ++i) {
+                hashrates += ((i > 0) ? splitter : '') + (Number(h[i] / 1000).toFixed(2) + ' MH/s');
+            }
+        }
+        return hashrates;
+    }
+
     function format_pools(pools, splitter) {
         if (!splitter) {
             splitter = '; ';
@@ -107,11 +121,13 @@ function worker() {
                     tableContent += '<td>' + this.uptime + '</td>';
                     tableContent += '<td>' + format_stats(this.eth, eth, this.target_eth, '<br>') + '</td>';
                     tableContent += '<td>' + format_stats(this.dcr, dcr, this.target_dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
+                    tableContent += '<td>' + format_hashrates(this.eth_hr, '<br>') + '</td>';
+                    tableContent += '<td>' + format_hashrates(this.dcr_hr, '<br>') + '</td>';
                     tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
                     tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
                     tableContent += '<td>' + this.ver + '</td>';
                 } else {
-                    tableContent += '<td colspan="6">' + this.error + '</td>';
+                    tableContent += '<td colspan="8">' + this.error + '</td>';
                 }
                 tableContent += '<td>' + this.comments + '</td>';
                 tableContent += '</tr>';
