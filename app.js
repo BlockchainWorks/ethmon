@@ -30,6 +30,7 @@ app.use(function(req, res, next) {
         "refresh"     : config.web_refresh,
         "tolerance"   : config.tolerance,
         "temperature" : config.temperature,
+        "hashrates"   : config.hashrates,
         "updated"     : moment().format("YYYY-MM-DD HH:mm:ss")
     };
     next();

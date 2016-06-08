@@ -113,21 +113,24 @@ function worker() {
             $.each(data.miners, function() {
 
                 var error = (this.error == null) ? '' : ' class=error';
+                var span = (data.hashrates) ? 8 : 6;
 
                 tableContent += '<tr' + error + '>';
                 tableContent += '<td>' + this.name + '</td>';
                 tableContent += '<td>' + this.host + '</td>';
 
                 if (this.error) {
-                    tableContent += '<td colspan="8">' + this.error + '</td>';
+                    tableContent += '<td colspan="' + span + '">' + this.error + '</td>';
                 } else if (this.offline) {
-                    tableContent += '<td colspan="8">' + this.offline + '</td>';
+                    tableContent += '<td colspan="' + span + '">' + this.offline + '</td>';
                 } else {
                     tableContent += '<td>' + this.uptime + '</td>';
                     tableContent += '<td>' + format_stats(this.eth, eth, this.target_eth, '<br>') + '</td>';
                     tableContent += '<td>' + format_stats(this.dcr, dcr, this.target_dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
-                    tableContent += '<td>' + format_hashrates(this.eth_hr, '<br>') + '</td>';
-                    tableContent += '<td>' + format_hashrates(this.dcr_hr, '<br>') + '</td>';
+                    if (data.hashrates) {
+                        tableContent += '<td>' + format_hashrates(this.eth_hr, '<br>') + '</td>';
+                        tableContent += '<td>' + format_hashrates(this.dcr_hr, '<br>') + '</td>';
+                    }
                     tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
                     tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
                     tableContent += '<td>' + this.ver + '</td>';

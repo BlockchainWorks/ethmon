@@ -23,6 +23,9 @@ Please notice that this sample will not work since contains comments not permitt
     // Optional temperature monitor threshold (no checks if unset or zero)
     "temperature": 70,
 
+    // Display detailed GPU hashrates if true
+    "hashrates": false,
+
     // Miners configuration. Use one {} block per miner
     "miners": [
         {

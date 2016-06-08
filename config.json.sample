@@ -5,6 +5,7 @@
     "web_refresh": 5000,
     "tolerance": 5,
     "temperature": 70,
+    "hashrates": false,
     "miners": [
         {
             "name": "rig01",
