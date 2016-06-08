@@ -96,6 +96,10 @@ config.miners.forEach(function(item, i, arr) {
     m.poll = (typeof c.poll !== 'undefined') ? c.poll : config.miner_poll;
     m.timeout = (typeof c.timeout !== 'undefined') ? c.timeout : config.miner_timeout;
 
+    function hostname() {
+        return c.hostname ? c.hostname : (m.host + ':' + m.port);
+    }
+
     // stats
     m.reqCnt = 0;
     m.rspCnt = 0;
@@ -117,7 +121,7 @@ config.miners.forEach(function(item, i, arr) {
         m.socket.destroy();
         miners.json[i] = {
             "name"       : m.name,
-            "host"       : m.host + ':' + m.port,
+            "host"       : hostname(),
             "uptime"     : "",
             "eth"        : "",
             "dcr"        : "",
@@ -138,7 +142,7 @@ config.miners.forEach(function(item, i, arr) {
         var d = JSON.parse(data);
         miners.json[i] = {
             "name"       : m.name,
-            "host"       : m.host + ':' + m.port,
+            "host"       : hostname(),
             "uptime"     : moment.duration(parseInt(d.result[1]), 'minutes').format('d [days,] hh:mm'),
             "eth"        : d.result[2],
             "dcr"        : d.result[4],
@@ -161,7 +165,7 @@ config.miners.forEach(function(item, i, arr) {
         console.log(m.name + ': socket error: ' + e.message);
         miners.json[i] = {
             "name"       : m.name,
-            "host"       : m.host + ':' + m.port,
+            "host"       : hostname(),
             "uptime"     : "",
             "eth"        : "",
             "dcr"        : "",
@@ -184,7 +188,7 @@ config.miners.forEach(function(item, i, arr) {
     } else {
         miners.json[i] = {
             "name"       : m.name,
-            "host"       : m.host + ':' + m.port,
+            "host"       : hostname(),
             "uptime"     : "",
             "eth"        : "",
             "dcr"        : "",

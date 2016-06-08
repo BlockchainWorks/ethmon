@@ -28,6 +28,7 @@
             "name": "rig03",
             "host": "10.0.0.102",
             "port": 3333,
+            "hostname": "private:3333",
             "target_eth": 19,
             "target_dcr": 395,
             "comments": "ASUS 7950",
