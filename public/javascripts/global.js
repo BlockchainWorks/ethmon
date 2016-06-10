@@ -73,12 +73,12 @@ function worker() {
         return tf;
     }
 
-    function format_hashrates(hr, splitter) {
+    function format_hashrates(hr, splitter, skip) {
         if (!splitter) {
             splitter = ' ';
         }
         var hashrates = '';
-        if (hr) {
+        if (!skip && hr) {
             var h = hr.split(';');
             for (var i = 0; i < h.length; ++i) {
                 hashrates += ((i > 0) ? splitter : '') + (Number(h[i] / 1000).toFixed(2) + ' MH/s');
@@ -129,7 +129,7 @@ function worker() {
                     tableContent += '<td>' + format_stats(this.dcr, dcr, this.target_dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
                     if (data.hashrates) {
                         tableContent += '<td>' + format_hashrates(this.eth_hr, '<br>') + '</td>';
-                        tableContent += '<td>' + format_hashrates(this.dcr_hr, '<br>') + '</td>';
+                        tableContent += '<td>' + format_hashrates(this.dcr_hr, '<br>', !this.pools.split(';')[1]) + '</td>';
                     }
                     tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
                     tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
