@@ -120,7 +120,8 @@ function worker() {
                 tableContent += '<td>' + this.host + '</td>';
 
                 if (this.error) {
-                    tableContent += '<td colspan="' + span + '">' + this.error + '</td>';
+                    last_seen = '<br>Last seen: ' + this.last_seen;
+                    tableContent += '<td colspan="' + span + '">' + this.error + last_seen + '</td>';
                 } else if (this.offline) {
                     tableContent += '<td colspan="' + span + '">' + this.offline + '</td>';
                 } else {

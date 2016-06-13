@@ -105,6 +105,9 @@ config.miners.forEach(function(item, i, arr) {
     m.reqCnt = 0;
     m.rspCnt = 0;
 
+    // it was never seen yet
+    c.last_seen = null;
+
     // socket
     m.socket = new net.Socket()
 
@@ -135,13 +138,15 @@ config.miners.forEach(function(item, i, arr) {
             "target_dcr" : "",
             "comments"   : c.comments,
             "offline"    : c.offline,
-            "error"      : 'Error: no response'
+            "error"      : 'Error: no response',
+            "last_seen"  : c.last_seen ? c.last_seen : 'never'
         };
     })
 
     .on('data', function(data) {
         ++m.rspCnt;
         console.log(m.name + ': rsp[' + m.rspCnt + ']: ' + data.toString().trim());
+        c.last_seen = moment().format("YYYY-MM-DD HH:mm:ss");
         m.socket.setTimeout(0);
         var d = JSON.parse(data);
         miners.json[i] = {
@@ -185,7 +190,8 @@ config.miners.forEach(function(item, i, arr) {
             "target_dcr" : "",
             "comments"   : c.comments,
             "offline"    : c.offline,
-            "error"      : e.name + ': ' + e.message
+            "error"      : e.name + ': ' + e.message,
+            "last_seen"  : c.last_seen ? c.last_seen : 'never'
         };
     });
 
