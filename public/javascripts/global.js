@@ -173,6 +173,7 @@ function worker() {
         error: function() {
             // Mark last update time with error flag
             $('#lastUpdated').addClass("error");
+            $('title').html('ERROR');
         },
 
         complete: function() {
