@@ -3,8 +3,11 @@ Please notice that this sample will not work since contains comments not permitt
 
 ```javascript
 {
-    // The title of web app window and table header
-    "title": "Miner Monitor",
+    // The title of web app window. %HR% if found will be replaced by total ETH hashrate in MH/s
+    "title": "%HR% MH/s - Miner Monitor",
+
+    // The header of the page. If missing, title option will be used. %HR% will be replaced too
+    "header": "Miner Monitor",
 
     // Default miner poll interval in ms
     "miner_poll": 5000,

@@ -149,6 +149,17 @@ function worker() {
             summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
             $('#minerSummary').html(summaryContent);
 
+            // Update window title and header with hashrate substitution
+            var title = data.title.replace('%HR%', Number(eth[0] / 1000).toFixed(2));
+            if ($('title').html() !== title) {
+                $('title').html(title);
+            }
+
+            var header = data.header.replace('%HR%', Number(eth[0] / 1000).toFixed(2));
+            if ($('#minerInfo h2').html() !== header) {
+                $('#minerInfo h2').html(header);
+            }
+
             // Display last update date/time
             var lastUpdated = 'Last updated: ' + data.updated;
             $('#lastUpdated').html(lastUpdated).removeClass("error");

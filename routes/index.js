@@ -3,7 +3,11 @@ var router = express.Router();
 
 // GET home page
 router.get('/', function(req, res, next) {
-    res.render('index', { title: req.title, hashrates: req.json.hashrates });
+    res.render('index', {
+                            title: req.json.title,
+                            header: req.json.header ? req.json.header : req.json.title,
+                            hashrates: req.json.hashrates
+                        });
 });
 
 module.exports = router;

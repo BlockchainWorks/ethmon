@@ -1,5 +1,6 @@
 {
-    "title": "Miner Monitor",
+    "title": "%HR% MH/s - Miner Monitor",
+    "header": "Miner Monitor",
     "miner_poll": 5000,
     "miner_timeout": 1000,
     "web_refresh": 5000,
