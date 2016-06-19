@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     req.json = {
         "title"       : config.title,
-        "header"      : config.header,
+        "header"      : config.header ? config.header : config.title,
         "miners"      : miners.json,
         "refresh"     : config.web_refresh,
         "tolerance"   : config.tolerance,

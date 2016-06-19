@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     res.render('index', {
                             title: req.json.title,
-                            header: req.json.header ? req.json.header : req.json.title,
+                            header: req.json.header,
                             hashrates: req.json.hashrates
                         });
 });
