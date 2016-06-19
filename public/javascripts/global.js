@@ -109,6 +109,7 @@ function worker() {
             }
 
             // For each item in JSON, add a table row and cells to the content string
+            var warning = { msg: null, last_good: null };
             var tableContent = '';
             $.each(data.miners, function() {
 
@@ -118,6 +119,12 @@ function worker() {
                 tableContent += '<tr' + error + '>';
                 tableContent += '<td>' + this.name + '</td>';
                 tableContent += '<td>' + this.host + '</td>';
+
+                if (this.warning) {
+                    // Only single last good time is reported for now
+                    warning.msg = this.warning;
+                    warning.last_good = this.last_good;
+                }
 
                 if (this.error) {
                     last_seen = '<br>Last seen: ' + this.last_seen;
@@ -144,13 +151,11 @@ function worker() {
             // Inject the whole content string into existing HTML table
             $('#minerInfo table tbody').html(tableContent);
 
-            var summaryContent = '';
-            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
-            summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
-            $('#minerSummary').html(summaryContent);
-
             // Update window title and header with hashrate substitution
             var title = data.title.replace('%HR%', Number(eth[0] / 1000).toFixed(0));
+            if (warning.msg !== null) {
+                title = 'Warning: ' + title;
+            }
             if ($('title').html() !== title) {
                 $('title').html(title);
             }
@@ -160,8 +165,15 @@ function worker() {
                 $('#minerInfo h2').html(header);
             }
 
-            // Display last update date/time
-            var lastUpdated = 'Last updated: ' + data.updated;
+            // Update summary
+            var summaryContent = '';
+            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
+            summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
+            $('#minerSummary').html(summaryContent);
+
+            // Display last update date/time and warning message
+            var lastUpdated = 'Last updated: ' + data.updated +
+                ((warning.msg !== null) ? ('<br>' + warning.msg + ', last seen good: ' + warning.last_good) : '');
             $('#lastUpdated').html(lastUpdated).removeClass("error");
 
             // Update refresh interval if defined
@@ -173,7 +185,7 @@ function worker() {
         error: function() {
             // Mark last update time with error flag
             $('#lastUpdated').addClass("error");
-            $('title').html('ERROR');
+            $('title').html('FATAL: No response');
         },
 
         complete: function() {

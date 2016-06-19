@@ -106,8 +106,9 @@ config.miners.forEach(function(item, i, arr) {
     m.reqCnt = 0;
     m.rspCnt = 0;
 
-    // it was never seen yet
+    // it was never seen and never found good yet
     c.last_seen = null;
+    c.last_good = null;
 
     // socket
     m.socket = new net.Socket()
@@ -139,6 +140,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_dcr" : "",
             "comments"   : c.comments,
             "offline"    : c.offline,
+            "warning"    : null,
             "error"      : 'Error: no response',
             "last_seen"  : c.last_seen ? c.last_seen : 'never'
         };
@@ -167,6 +169,15 @@ config.miners.forEach(function(item, i, arr) {
             "offline"    : c.offline,
             "error"      : null
         };
+        if (c.target_eth && config.tolerance) {
+            if (miners.json[i].eth.split(';')[0] / 1000 < c.target_eth * (1 - config.tolerance / 100)) {
+                miners.json[i].warning = 'Low hashrate';
+                miners.json[i].last_good = c.last_good ? c.last_good : 'never';
+            } else {
+                miners.json[i].warning = null;
+                c.last_good = moment().format("YYYY-MM-DD HH:mm:ss");
+            }
+        }
     })
 
     .on('close', function() {
@@ -191,6 +202,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_dcr" : "",
             "comments"   : c.comments,
             "offline"    : c.offline,
+            "warning"    : null,
             "error"      : e.name + ': ' + e.message,
             "last_seen"  : c.last_seen ? c.last_seen : 'never'
         };
