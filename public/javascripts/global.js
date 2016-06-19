@@ -110,13 +110,15 @@ function worker() {
 
             // For each item in JSON, add a table row and cells to the content string
             var warning = { msg: null, last_good: null };
+            var error = { msg: null };
+
             var tableContent = '';
             $.each(data.miners, function() {
 
-                var error = (this.error == null) ? '' : ' class=error';
+                var error_class = (this.error == null) ? '' : ' class=error';
                 var span = (data.hashrates) ? 8 : 6;
 
-                tableContent += '<tr' + error + '>';
+                tableContent += '<tr' + error_class + '>';
                 tableContent += '<td>' + this.name + '</td>';
                 tableContent += '<td>' + this.host + '</td>';
 
@@ -127,6 +129,7 @@ function worker() {
                 }
 
                 if (this.error) {
+                    error.msg = this.error;
                     last_seen = '<br>Last seen: ' + this.last_seen;
                     tableContent += '<td colspan="' + span + '">' + this.error + last_seen + '</td>';
                 } else if (this.offline) {
@@ -153,7 +156,9 @@ function worker() {
 
             // Update window title and header with hashrate substitution
             var title = data.title.replace('%HR%', Number(eth[0] / 1000).toFixed(0));
-            if (warning.msg !== null) {
+            if (error.msg !== null) {
+                title = 'Error: ' + title;
+            } else if (warning.msg !== null) {
                 title = 'Warning: ' + title;
             }
             if ($('title').html() !== title) {
@@ -185,7 +190,7 @@ function worker() {
         error: function() {
             // Mark last update time with error flag
             $('#lastUpdated').addClass("error");
-            $('title').html('FATAL: No response');
+            $('title').html('FATAL: No response from server');
         },
 
         complete: function() {
