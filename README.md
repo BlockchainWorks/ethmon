@@ -22,6 +22,7 @@ Origin: https://github.com/osnwt/ethmon
 
 ## TODO
 * Add email notifications of failures such like no response from miner or low hashrate
+* Add a window title animation to show that miners are working
 * Add a feature of restarting the miner in case of failures such like high number of rejects
 * Style the web page for small screens of mobile devices (anybody?)
 * Publish a release version 1.0.0
