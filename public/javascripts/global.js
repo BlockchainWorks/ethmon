@@ -150,12 +150,12 @@ function worker() {
             $('#minerSummary').html(summaryContent);
 
             // Update window title and header with hashrate substitution
-            var title = data.title.replace('%HR%', Number(eth[0] / 1000).toFixed(2));
+            var title = data.title.replace('%HR%', Number(eth[0] / 1000).toFixed(0));
             if ($('title').html() !== title) {
                 $('title').html(title);
             }
 
-            var header = data.header.replace('%HR%', Number(eth[0] / 1000).toFixed(2));
+            var header = data.header.replace('%HR%', Number(eth[0] / 1000).toFixed(0));
             if ($('#minerInfo h2').html() !== header) {
                 $('#minerInfo h2').html(header);
             }
