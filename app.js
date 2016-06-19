@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     req.json = {
         "title"       : config.title,
+        "animation"   : config.animation,
         "header"      : config.header ? config.header : config.title,
         "miners"      : miners.json,
         "refresh"     : config.web_refresh,

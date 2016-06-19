@@ -3,11 +3,17 @@ Please notice that this sample will not work since contains comments not permitt
 
 ```javascript
 {
-    // Console log level (FATAL, ERROR, WARN, INFO, TRACE). Default is INFO if not specified
+    // Optional console log level (FATAL, ERROR, WARN, INFO, TRACE). Default is INFO
     "log_level": "WARN",
 
-    // The title of web app window. %HR% if found will be replaced by total ETH hashrate in MH/s
+    // The title of web app window. %HR% if found will be replaced by total ETH hashrate in MH/s.
+    // %ANI% will be replaced by animation string (see below for details)
     "title": "%HR% MH/s - Miner Monitor",
+
+    // Animation string array with any number of strings. Each string will be used in an animation
+    // sequence and change on every web_refresh interval. The value of string will replace the
+    // %ANI% placeholder in the window title string, if found
+    "animation": [ "/", "-", "\\", "|" ],
 
     // The header of the page. If missing, title option will be used. %HR% will be replaced too
     "header": "Miner Monitor",

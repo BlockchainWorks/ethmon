@@ -8,6 +8,9 @@ var tolerance = 0.05;
 // GPU temperature monitoring threshold (zero disables monitoring)
 var temperature = 0;
 
+// Title animation index
+var animation_index = 0;
+
 // DOM Ready =============================================================
 
 $(document).ready(function() {
@@ -160,6 +163,11 @@ function worker() {
                 title = 'Error: ' + title;
             } else if (warning.msg !== null) {
                 title = 'Warning: ' + title;
+            }
+            if (data.animation) {
+                var c = data.animation[animation_index];
+                animation_index = (animation_index + 1) % data.animation.length;
+                title = title.replace('%ANI%', c);
             }
             if ($('title').html() !== title) {
                 $('title').html(title);
