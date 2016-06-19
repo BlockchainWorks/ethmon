@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+var express_logger = require('morgan');
 
 var routes = require('./routes/index');
 var miners = require('./routes/miners');
@@ -13,6 +14,7 @@ app.set('view engine', 'jade');
 
 // Uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express_logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make miner data accessible to the router
@@ -64,21 +66,31 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
+// --------------- BOOT ---------------
+
+var config = require('./config.json');
+
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+logger.setLevel(config.log_level ? config.log_level : 'INFO');
+
+logger.warn('app: booting');
+
+// --------------- /BOOT ---------------
+
 // --------------- REQUESTER ---------------
 
 var net = require('net');
 var moment = require('moment');
 require("moment-duration-format");
 
-var config = require('./config.json');
-
 var miners = [];
 miners.json = [];
 
-console.log('config: ' + config.miners.length + ' rig(s) configured');
+logger.info('config: ' + config.miners.length + ' rig(s) configured');
 
 config.miners.forEach(function(item, i, arr) {
-    console.log(item.name + ': config[' + i + ']');
+    logger.trace(item.name + ': config[' + i + ']');
 
     // settings
     var m = miners[i] = {};
@@ -107,16 +119,16 @@ config.miners.forEach(function(item, i, arr) {
     m.socket = new net.Socket()
 
     .on('connect', function() {
-        console.log(m.name + ': connected to ' + m.socket.remoteAddress + ':' + m.socket.remotePort);
+        logger.info(m.name + ': connected to ' + m.socket.remoteAddress + ':' + m.socket.remotePort);
         var req = '{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}';
         ++m.reqCnt;
-        console.log(m.name + ': req[' + m.reqCnt + ']: ' + req);
+        logger.trace(m.name + ': req[' + m.reqCnt + ']: ' + req);
         m.socket.write(req + '\n');
         m.socket.setTimeout(m.timeout);
     })
 
     .on('timeout', function() {
-        console.log(m.name + ': response timeout');
+        logger.warn(m.name + ': response timeout');
         m.socket.destroy();
         miners.json[i] = {
             "name"       : m.name,
@@ -141,7 +153,7 @@ config.miners.forEach(function(item, i, arr) {
 
     .on('data', function(data) {
         ++m.rspCnt;
-        console.log(m.name + ': rsp[' + m.rspCnt + ']: ' + data.toString().trim());
+        logger.trace(m.name + ': rsp[' + m.rspCnt + ']: ' + data.toString().trim());
         c.last_seen = moment().format("YYYY-MM-DD HH:mm:ss");
         m.socket.setTimeout(0);
         var d = JSON.parse(data);
@@ -174,12 +186,12 @@ config.miners.forEach(function(item, i, arr) {
     })
 
     .on('close', function() {
-        console.log(m.name + ': connection closed');
+        logger.info(m.name + ': connection closed');
         setTimeout(poll, m.poll);
     })
 
     .on('error', function(e) {
-        console.log(m.name + ': socket error: ' + e.message);
+        logger.error(m.name + ': socket error: ' + e.message);
         miners.json[i] = {
             "name"       : m.name,
             "host"       : hostname(),

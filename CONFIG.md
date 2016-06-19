@@ -3,6 +3,9 @@ Please notice that this sample will not work since contains comments not permitt
 
 ```javascript
 {
+    // Console log level (FATAL, ERROR, WARN, INFO, TRACE). Default is INFO if not specified
+    "log_level": "WARN",
+
     // The title of web app window. %HR% if found will be replaced by total ETH hashrate in MH/s
     "title": "%HR% MH/s - Miner Monitor",
 
