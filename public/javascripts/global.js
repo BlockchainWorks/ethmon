@@ -186,7 +186,7 @@ function worker() {
 
             // Display last update date/time and warning message
             var lastUpdated = 'Last updated: ' + data.updated +
-                ((warning.msg !== null) ? ('<br>' + warning.msg + ', last seen good: ' + warning.last_good) : '');
+                ((warning.msg !== null) ? ('<br><span class="error">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>') : '');
             $('#lastUpdated').html(lastUpdated).removeClass("error");
 
             // Update refresh interval if defined
