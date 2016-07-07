@@ -116,42 +116,42 @@ function worker() {
             var error = { msg: null };
 
             var tableContent = '';
-            $.each(data.miners, function() {
+            $.each(data.miners, function(index, miner) {
+                if (miner !== null) {
+                    var error_class = (miner.error == null) ? '' : ' class=error';
+                    var span = (data.hashrates) ? 8 : 6;
 
-                var error_class = (this.error == null) ? '' : ' class=error';
-                var span = (data.hashrates) ? 8 : 6;
+                    tableContent += '<tr' + error_class + '>';
+                    tableContent += '<td>' + miner.name + '</td>';
+                    tableContent += '<td>' + miner.host + '</td>';
 
-                tableContent += '<tr' + error_class + '>';
-                tableContent += '<td>' + this.name + '</td>';
-                tableContent += '<td>' + this.host + '</td>';
-
-                if (this.warning) {
-                    // Only single last good time is reported for now
-                    warning.msg = this.warning;
-                    warning.last_good = this.last_good;
-                }
-
-                if (this.error) {
-                    error.msg = this.error;
-                    last_seen = '<br>Last seen: ' + this.last_seen;
-                    tableContent += '<td colspan="' + span + '">' + this.error + last_seen + '</td>';
-                } else if (this.offline) {
-                    tableContent += '<td colspan="' + span + '">' + this.offline + '</td>';
-                } else {
-                    tableContent += '<td>' + this.uptime + '</td>';
-                    tableContent += '<td>' + format_stats(this.eth, eth, this.target_eth, '<br>') + '</td>';
-                    tableContent += '<td>' + format_stats(this.dcr, dcr, this.target_dcr, '<br>', !this.pools.split(';')[1]) + '</td>';
-                    if (data.hashrates) {
-                        tableContent += '<td>' + format_hashrates(this.eth_hr, '<br>') + '</td>';
-                        tableContent += '<td>' + format_hashrates(this.dcr_hr, '<br>', !this.pools.split(';')[1]) + '</td>';
+                    if (miner.warning) {
+                        // Only single last good time is reported for now
+                        warning.msg = miner.warning;
+                        warning.last_good = miner.last_good;
                     }
-                    tableContent += '<td>' + format_temps(this.temps, '<br>') + '</td>';
-                    tableContent += '<td>' + format_pools(this.pools, '<br>') + '</td>';
-                    tableContent += '<td>' + this.ver + '</td>';
-                }
-                tableContent += '<td>' + this.comments + '</td>';
-                tableContent += '</tr>';
 
+                    if (miner.error) {
+                        error.msg = miner.error;
+                        last_seen = '<br>Last seen: ' + miner.last_seen;
+                        tableContent += '<td colspan="' + span + '">' + miner.error + last_seen + '</td>';
+                    } else if (miner.offline) {
+                        tableContent += '<td colspan="' + span + '">' + miner.offline + '</td>';
+                    } else {
+                        tableContent += '<td>' + miner.uptime + '</td>';
+                        tableContent += '<td>' + format_stats(miner.eth, eth, miner.target_eth, '<br>') + '</td>';
+                        tableContent += '<td>' + format_stats(miner.dcr, dcr, miner.target_dcr, '<br>', !miner.pools.split(';')[1]) + '</td>';
+                        if (data.hashrates) {
+                            tableContent += '<td>' + format_hashrates(miner.eth_hr, '<br>') + '</td>';
+                            tableContent += '<td>' + format_hashrates(miner.dcr_hr, '<br>', !miner.pools.split(';')[1]) + '</td>';
+                        }
+                        tableContent += '<td>' + format_temps(miner.temps, '<br>') + '</td>';
+                        tableContent += '<td>' + format_pools(miner.pools, '<br>') + '</td>';
+                        tableContent += '<td>' + miner.ver + '</td>';
+                    }
+                    tableContent += '<td>' + miner.comments + '</td>';
+                    tableContent += '</tr>';
+                }
             });
 
             // Inject the whole content string into existing HTML table
