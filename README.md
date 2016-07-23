@@ -12,13 +12,13 @@ Origin: https://github.com/osnwt/ethmon
 * Clone this repository or download and extract files
 * Change to the top directory of the package
 * Install dependencies (npm install)
-* Copy config.json.sample to config.json and edit where necessary
+* Copy config.json.sample to config.json and edit where necessary (see CONFIG.md for detailed comments and optional parameters)
 * Start the application (npm start)
 * Open web browser to localhost:3000 (or your IP:3000)
 * Enjoy
 
 ## Known issues
-* On Ubuntu after 'apt-get install npm' the node interpreter is called nodejs due to conflict with some other package. In that case you may need to replace "node ./bin/www" by "nodejs ./bin/www" in package.json file
+* On some Ubuntu releases after 'apt-get install npm' the node interpreter is called nodejs due to conflict with some other package. In that case you may need to replace "node ./bin/www" by "nodejs ./bin/www" in package.json file or better create a link from /usr/local/node to the nodejs binary 
 
 ## TODO
 * Add email notifications of failures such like no response from miner or low hashrate
