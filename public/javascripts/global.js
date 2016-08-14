@@ -39,7 +39,7 @@ function worker() {
             }
 
             // Format fields
-            var hashrate = Number(s[0] / 1000).toFixed(2) + ' MH/s';
+            var hashrate = Number(s[0] / 1000).toFixed(2) + '&nbsp;MH/s';
             var shares = s[1] + '/' + s[2];
             var rejects = (s[1] > 0) ? (' (' + Number(s[2] / s[1] * 100).toFixed(2) + '%)') : '';
 
@@ -84,7 +84,7 @@ function worker() {
         if (!skip && hr) {
             var h = hr.split(';');
             for (var i = 0; i < h.length; ++i) {
-                hashrates += ((i > 0) ? splitter : '') + (Number(h[i] / 1000).toFixed(2) + ' MH/s');
+                hashrates += ((i > 0) ? splitter : '') + (Number(h[i] / 1000).toFixed(2) + '&nbsp;MH/s');
             }
         }
         return hashrates;
