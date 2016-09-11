@@ -65,7 +65,12 @@ Please notice that this sample will not work since contains comments not permitt
 
             // Optional miner-specific overrides for default miner_poll and miner_timeout values
             "poll": 3000,
-            "timeout": 500
+            "timeout": 500,
+
+            // Optional temperature index list.
+            // Will show only temps for GPUs in the list in specified order if defined
+            // and not empty. Will show temps for all cards as supplied by miner otherwise.
+            "ti": [ 1, 2 ]
         },
         {
             // Similar setting for other miners

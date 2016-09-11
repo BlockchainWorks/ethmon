@@ -57,17 +57,19 @@ function worker() {
         return '';
     }
 
-    function format_temps(temps, splitter) {
+    function format_temps(temps, splitter, ti) {
         if (!splitter) {
             splitter = ' ';
         }
         var tf = '';
         if (temps) {
             var t = temps.split(';');
-            for (var i = 0; i < t.length; i += 2) {
-                var temp = t[i] + 'C';
-                var fan = t[i+1] + '%';
-                if (temperature && (t[i] > temperature)) {
+            var tnum = ti ? ti.length : (t.length / 2);
+            for (var i = 0; i < tnum; ++i) {
+                var j = (ti ? ti[i] : i) * 2;
+                var temp = t[j] + 'C';
+                var fan = t[j + 1] + '%';
+                if (temperature && (t[j] > temperature)) {
                     temp = '<span class="error">' + temp + '</span>';
                 }
                 tf += ((i > 0) ? splitter : '') + temp + ':' + fan;
@@ -145,7 +147,7 @@ function worker() {
                             tableContent += '<td>' + format_hashrates(miner.eth_hr, '<br>') + '</td>';
                             tableContent += '<td>' + format_hashrates(miner.dcr_hr, '<br>', !miner.pools.split(';')[1]) + '</td>';
                         }
-                        tableContent += '<td>' + format_temps(miner.temps, '<br>') + '</td>';
+                        tableContent += '<td>' + format_temps(miner.temps, '<br>', miner.ti) + '</td>';
                         tableContent += '<td>' + format_pools(miner.pools, '<br>') + '</td>';
                         tableContent += '<td>' + miner.ver + '</td>';
                     }

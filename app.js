@@ -173,6 +173,7 @@ config.miners.forEach(function(item, i, arr) {
             "target_dcr" : c.target_dcr,
             "comments"   : c.comments,
             "offline"    : c.offline,
+            "ti"         : c.ti ? c.ti : null,
             "error"      : null
         };
         if (c.target_eth && config.tolerance) {
