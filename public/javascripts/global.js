@@ -41,7 +41,7 @@ function worker() {
             // Format fields
             var hashrate = Number(s[0] / 1000).toFixed(2) + '&nbsp;MH/s';
             var shares = s[1] + '/' + s[2];
-            var rejects = (s[1] > 0) ? (' (' + Number(s[2] / s[1] * 100).toFixed(2) + '%)') : '';
+            var rejects = (s[1] > 0) ? ('&nbsp;(' + Number(s[2] / s[1] * 100).toFixed(2) + '%)') : '';
 
             // Check tolerance
             if ((target !== null) && tolerance) {
@@ -182,8 +182,8 @@ function worker() {
 
             // Update summary
             var summaryContent = '';
-            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
-            summaryContent += 'Total DCR hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
+            summaryContent += 'Total ETH/ETC hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
+            summaryContent += 'Total DCR/SIA hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
             $('#minerSummary').html(summaryContent);
 
             // Display last update date/time and warning message
