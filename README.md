@@ -1,6 +1,8 @@
 # ethmon
 Claymore's Dual Ethereum+Decred GPU Miner nodejs-based web monitoring utility
 
+## WARNING: this project is not being developed anymore. Do not expect any updates.
+
 Simple web application for Claymore's Dual Ethereum+Decred GPU Miner monitoring. It provides the same functions as an embedded into EthMan application web server, but is cross-platform and open-source.
 
 More info: https://bitcointalk.org/index.php?topic=1433925
