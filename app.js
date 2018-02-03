@@ -101,6 +101,7 @@ config.miners.forEach(function(item, i, arr) {
     m.name = c.name;
     m.host = c.host;
     m.port = c.port;
+    m.password = c.password;
     m.poll = (typeof c.poll !== 'undefined') ? c.poll : config.miner_poll;
     m.timeout = (typeof c.timeout !== 'undefined') ? c.timeout : config.miner_timeout;
 
@@ -121,10 +122,17 @@ config.miners.forEach(function(item, i, arr) {
 
     .on('connect', function() {
         logger.info(m.name + ': connected to ' + m.socket.remoteAddress + ':' + m.socket.remotePort);
-        var req = '{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}';
+        var req = {
+			"id"      : 0,
+			"jsonrpc" : "2.0",
+			"method"  : "miner_getstat1"
+		};
+		if (m.password) {
+			req.psw = m.password;
+		}
         ++m.reqCnt;
         logger.trace(m.name + ': req[' + m.reqCnt + ']: ' + req);
-        m.socket.write(req + '\n');
+        m.socket.write(JSON.stringify(req) + '\n');
         m.socket.setTimeout(m.timeout);
     })
 

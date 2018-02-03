@@ -51,6 +51,9 @@ Please notice that this sample will not work since contains comments not permitt
             // If defined and not empty, report this as a host name instead of IP:port
             "hostname": "private:3333",
 
+            // If defined and not empty, will be used to connect to Claymore instance
+            "password": "secret",
+
             // Optional target hashrates in MH/s
             "target_eth": 118,
             "target_dcr": 2700,
